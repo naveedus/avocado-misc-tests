@@ -1,0 +1,31 @@
+device:
+firmware_url:
+force_update: true
+slot: 0
+action: 1
+
+# Device parameter accepts values as follows:
+# NQN: nqn.1994-11.com.vendor:nvme:modela:2.5-inch:SERIALNUM
+# Subsystem: nvme-subsysX
+# Controller: nvmeX
+
+# firmware_url: URL to download firmware binary (required)
+# Examples:
+#   - Direct binary: https://example.com/firmware/nvme_fw_v1.2.3.bin
+#   - Archive: https://example.com/firmware/nvme_fw_v1.2.3.zip
+# Supported formats: .bin, .fw, .rom, .zip, .tar.gz, .tgz, .tar.bz2
+
+# force_update: Force update even if same firmware version (default: true)
+# Set to true to allow updating with same version firmware
+
+# slot: Firmware slot to use (default: 0 for next available)
+# Values: 0 (auto), 1-7 (specific slot)
+
+# action: Firmware commit action (default: 1)
+# Values:
+#   0: Downloaded image replaces the image indicated by the slot field
+#   1: Downloaded image replaces the image indicated by the slot field and is activated
+#   2: The image indicated by the slot field is activated
+#   3: Downloaded image replaces the Boot Partition image
+
+# Assisted with AI tools
