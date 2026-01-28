@@ -1,0 +1,25 @@
+# IOMMUFD PPC64 Test Configuration
+# Test parameters for IOMMUFD support on PowerPC 64-bit systems
+
+# Basic test - no device passthrough
+basic:
+    test_mode: 'basic'
+    pci_device: null
+
+# Single device passthrough test
+# Replace with actual PCI device address (e.g., '0000:01:00.0')
+single_device:
+    test_mode: 'passthrough'
+    pci_device: '0000:01:00.0'  # Example: NVMe device
+
+# PowerNV (bare metal) specific test
+powernv:
+    test_mode: 'basic'
+    platform: 'powernv'
+
+# pSeries (LPAR) specific test
+pseries:
+    test_mode: 'basic'
+    platform: 'pseries'
+
+# Assisted with AI tools
