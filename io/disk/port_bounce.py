@@ -10,9 +10,10 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 #
 # See LICENSE for more details.
-# Copyright: 2017 IBM
+# Copyright: 2017, 2026 IBM
 # Author: Pridhiviraj Paidipeddi <ppaidipe@linux.vnet.ibm.com>
 # Author: Naresh Bannoth <nbannoth@in.ibm.com>
+# Author: Naveed <naveedaus@in.ibm.com>
 # this script runs portbounce test on different ports of fc or fcoe switches.
 
 import re
@@ -271,7 +272,7 @@ class PortBounceTest(Test):
                 if not wait.wait_for(is_path_online, timeout=10):
                     err_paths.append("%s:%s" % (port, curr_path))
         if err_paths:
-            self.error("following paths not %s: %s" % (state1, err_paths))
+            self.fail("following paths not %s: %s" % (state1, err_paths))
         else:
             self.log.info("%s path verification is success", state1)
 

@@ -11,9 +11,10 @@
 #
 # See LICENSE for more details.
 #
-# Copyright: 2016 IBM
+# Copyright: 2016,2026 IBM
 # Author: Harish <harisrir@linux.vnet.ibm.com>
-#
+# Author: Naveed <naveedaus@in.ibm.com>
+# 
 # Based on code by Martin J. Bligh <mbligh@google.com>
 #   copyright 2006 Google, Inc.
 #   https://github.com/autotest/autotest-client-tests/tree/master/dbench
@@ -84,7 +85,7 @@ class Dbench(Test):
             pkgs.append('mdadm')
         for pkg in pkgs:
             if not sm.check_installed(pkg) and not sm.install(pkg):
-                self.error('%s is needed for the test to be run' % pkg)
+                self.cancel('%s is needed for the test to be run' % pkg)
 
         if fstype == 'btrfs':
             if detected_distro.name == 'Ubuntu':

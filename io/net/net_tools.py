@@ -11,8 +11,9 @@
 #
 # See LICENSE for more details.
 #
-# Copyright: 2016 IBM
+# Copyright: 2016, 2026 IBM
 # Author: Basheer K<basheer@linux.vnet.ibm.com>
+# Author: Naveed <naveedaus@in.ibm.com>
 #
 # Based on code by Hong Bo Peng <penghb@cn.ibm.com>
 # copyright: 2003, 2015 IBM Corp
@@ -104,7 +105,7 @@ class Hostname(Test):
                            sudo=True)
             if self.hostname not in process.system_output("hostname",
                                                           env={"LANG": "C"}).decode("utf-8"):
-                self.error("Failed to restore Hostname")
+                self.fail("Failed to restore Hostname")
 
 
 class Ifconfig(Test):
@@ -179,7 +180,7 @@ class Ifconfig(Test):
             except Exception:
                 errs.append("restore lo state")
         if errs:
-            self.error("Failed to: %s" % ", ".join(errs))
+            self.fail("Failed to: %s" % ", ".join(errs))
 
 
 class Arp(Test):

@@ -11,8 +11,9 @@
 
 # See LICENSE for more details.
 #
-# Copyright: 2016 IBM
+# Copyright: 2016, 2026 IBM
 # Author: Sandeep K <sandeep@linux.vnet.ibm.com>
+# Author: Naveed <naveedaus@in.ibm.com>
 #
 # Based on code by Martin Bligh<mbligh@google.com>
 # Copyright: 2008 Google
@@ -43,7 +44,7 @@ class Pktgen(Test):
         if not os.path.exists('/proc/net/pktgen'):
             process.system("modprobe pktgen", ignore_status=True, shell=True)
         if not os.path.exists('/proc/net/pktgen'):
-            self.error("pktgen not loaded")
+            self.cancel("pktgen module could not be loaded")
 
         # validating the dst_ip and network interface
         self.validate_net_interface()
