@@ -14,6 +14,7 @@
 # Copyright: 2016 IBM
 # Author: Prudhvi Miryala <mprudhvi@linux.vnet.ibm.com>
 # Author: Narasimhan V <sim@linux.vnet.ibm.com>
+# Author: Naveed AUS <naveedaus@in.ibm.com> (Assisted with AI tools)
 #
 
 """
@@ -91,7 +92,7 @@ class NetworkTest(Test):
         self.peer_user = self.params.get("peer_user", default="root")
         self.peer_password = self.params.get("peer_password", '*',
                                              default=None)
-        if 'scp' or 'ssh' in str(self.name.name):
+        if 'scp' in str(self.name.name) or 'ssh' in str(self.name.name):
             self.session = Session(self.peer, user=self.peer_user,
                                    password=self.peer_password)
             self.session.cleanup_master()
@@ -269,12 +270,18 @@ class NetworkTest(Test):
         '''
         Test set mtu back to 1500
         '''
-        try:
-            self.peer_networkinterface.set_mtu('1500')
-        except Exception:
-            self.peer_public_networkinterface.set_mtu('1500')
-        if self.networkinterface.set_mtu('1500') is not None:
-            self.cancel("Failed to set mtu in host")
+        if hasattr(self, 'peer_networkinterface'):
+            try:
+                self.peer_networkinterface.set_mtu('1500')
+            except Exception:
+                if hasattr(self, 'peer_public_networkinterface'):
+                    try:
+                        self.peer_public_networkinterface.set_mtu('1500')
+                    except Exception:
+                        self.log.warning("Failed to reset MTU on peer public interface")
+        if hasattr(self, 'networkinterface'):
+            if self.networkinterface.set_mtu('1500') is not None:
+                self.log.warning("Failed to set mtu in host")
 
     def offload_toggle_test(self, ro_type, ro_type_full):
         '''
@@ -335,9 +342,10 @@ class NetworkTest(Test):
         self.mtu_set_back()
         if 'scp' in str(self.name.name):
             process.run("rm -rf /tmp/tempfile")
-            cmd = "rm -rf /tmp/tempfile"
-            self.session.cmd(cmd)
-        if self.ip_config:
+            if hasattr(self, 'session'):
+                cmd = "rm -rf /tmp/tempfile"
+                self.session.cmd(cmd)
+        if self.ip_config and hasattr(self, 'networkinterface'):
             self.networkinterface.remove_ipaddr(self.ipaddr, self.netmask)
             try:
                 self.networkinterface.restore_from_backup()
@@ -345,7 +353,9 @@ class NetworkTest(Test):
                 self.networkinterface.remove_cfg_file()
                 self.log.info(
                     "backup file not available, could not restore file.")
-        self.remotehost.remote_session.quit()
-        self.remotehost_public.remote_session.quit()
-        if 'scp' or 'ssh' in str(self.name.name):
+        if hasattr(self, 'remotehost'):
+            self.remotehost.remote_session.quit()
+        if hasattr(self, 'remotehost_public'):
+            self.remotehost_public.remote_session.quit()
+        if 'scp' in str(self.name.name) or 'ssh' in str(self.name.name):
             self.session.quit()
