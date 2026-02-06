@@ -1,0 +1,33 @@
+# DLPAR PCI Error Handling Test Configuration
+#
+# This YAML file provides test parameters for the DLPAR PCI hotplug
+# error handling test suite.
+#
+# Usage:
+#   avocado run dlpar_pci_error_handling.py -m dlpar_pci_error_handling.yaml
+
+# Basic test configuration
+basic_test:
+    slot_name: "PHB 391"
+    iterations: 1
+    stress_test: False
+
+# Stress test configuration
+stress_test:
+    slot_name: "PHB 391"
+    iterations: 10
+    stress_test: True
+
+# Multiple iterations test
+multi_iteration:
+    slot_name: "PHB 391"
+    iterations: 20
+    stress_test: False
+
+# Custom slot test (replace with your actual slot name)
+custom_slot:
+    slot_name: "PHB 392"
+    iterations: 5
+    stress_test: False
+
+# Assisted with AI tools.
