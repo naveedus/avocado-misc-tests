@@ -1,0 +1,45 @@
+# NVMe-oF TCP Target Test Configuration
+backend_device: /dev/nvme0n1
+target_ip: 192.168.1.49
+target_port: 4420
+subsystem_nqn: nqn.2026-01.lab:nvme:target1
+namespace_count: 1
+port_id: 1
+cleanup_on_teardown: true
+
+TestScenarios: !mux
+    single_namespace:
+        namespace_count: 1
+        backend_device: /dev/nvme0n1
+        subsystem_nqn: nqn.2026-01.lab:nvme:target1
+        target_ip: 192.168.1.49
+        target_port: 4420
+        port_id: 1
+        cleanup_on_teardown: true
+    
+    multiple_namespaces:
+        namespace_count: 1
+        backend_device: /dev/nvme1n1
+        subsystem_nqn: nqn.2026-01.lab:nvme:target-multi
+        target_ip: 192.168.2.49
+        target_port: 4420
+        port_id: 2
+        cleanup_on_teardown: true
+    
+    custom_port:
+        namespace_count: 1
+        backend_device: /dev/nvme1n2
+        subsystem_nqn: nqn.2026-01.lab:nvme:target-custom
+        target_ip: 192.168.1.49
+        target_port: 8009
+        port_id: 3
+        cleanup_on_teardown: true
+    
+    multipath_setup:
+        namespace_count: 1
+        backend_device: /dev/nvme1n3
+        subsystem_nqn: nqn.2026-01.lab:nvme:multipath
+        target_ip: 192.168.2.49
+        target_port: 4420
+        port_id: 10
+        cleanup_on_teardown: true
